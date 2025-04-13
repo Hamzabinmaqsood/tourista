@@ -1,0 +1,81 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+nav {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem;
+}
+
+.featured-business {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Container styling for consistent width */
+.container {
+    max-width: 960px;
+    margin: auto;
+}
+
+
+/* Toggle button */
+.toggle-auth-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Toggle buttons container */
+  .toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-btn {
+    background: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    font-weight: 600;
+  }
+  
+  .toggle-btn.active {
+    background: #3498db;
+    color: #fff;
+  }
+  
+  .form-card {
+    transition: all 0.3s ease;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .btn {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
