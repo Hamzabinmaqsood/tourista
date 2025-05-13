@@ -1,7 +1,8 @@
 # Tourista 🚀
-[![Build Status](https://github.com/hamzabinmaqsood/tourista/actions/workflows/ci.yml/badge.svg)](https://github.com/Hamzabinmaqsood/tourista)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/hamzabinmaqsood/tourista.svg)](https://github.com/hamzabinmaqsood/tourista/stargazers)
+
+[![Build Status](https://github.com/Hamzabinmaqsood/tourista/actions/workflows/ci.yml/badge.svg)](https://github.com/Hamzabinmaqsood/tourista/actions)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
+[![GitHub stars](https://img.shields.io/github/stars/Hamzabinmaqsood/tourista.svg?style=social)](https://github.com/Hamzabinmaqsood/tourista/stargazers)  
 
 > Django & PostgreSQL web app for real-time, location-based tour recommendations  
 
