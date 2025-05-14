@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ biz.name }} – Tourista{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row g-4">
+    <!-- Image + Basic Info -->
+    <div class="col-md-6">
+      {% if biz.image_url %}
+        <img src="{{ biz.image_url }}" class="img-fluid rounded" alt="{{ biz.name }}">
+      {% else %}
+        <img src="{% static 'images/dummy_business.jpg' %}"
+             class="img-fluid rounded"
+             alt="Placeholder Business">
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+      <h1>{{ biz.name }}</h1>
+      <p class="text-muted"><strong>Type:</strong> {{ biz.get_business_type_display }}</p>
+      <p class="text-muted"><strong>Location:</strong> {{ biz.location }}</p>
+      <p>
+        <span class="badge bg-success">{{ biz.sustainability_score }} Eco</span>
+      </p>
+      <p>{{ biz.description|default:"No description available." }}</p>
+      <a href="#" class="btn btn-primary">Book Now</a>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <hr class="my-5">
+  <h3 class="mb-4">Customer Reviews</h3>
+  {% for r in reviews %}
+    <div class="mb-4">
+      <h5>{{ r.author }} 
+        <small class="text-warning">
+          {% for i in "12345"|slice:":r.rating"|make_list %}
+            ★
+          {% endfor %}
+        </small>
+      </h5>
+      <p>{{ r.text }}</p>
+    </div>
+  {% empty %}
+    <p>No reviews yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

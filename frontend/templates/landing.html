@@ -1,189 +1,135 @@
 {% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <!-- Ensure responsive design -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% block title %}
-  <title>Tourista - Discover Your Next Adventure</title>
-  {% endblock %}
-  
-  <!-- Link external CSS (optional, additional styles can be moved to style.css) -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  
-   {% block extra_css %}
-  <!-- Inline CSS for parallax effect and layout -->
-  <style>
-    /* ---------- PARALLAX HERO SECTION ---------- */
-    .parallax {
-      /* Replace 'travel_hero.jpg' with a dynamic travel visual in your static/images folder */
-      background-image: url("{% static 'images/travel_hero.jpg' %}");
-      height: 100vh; /* Full viewport height */
-      background-attachment: fixed; /* Parallax scrolling effect */
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-    
-    /* Overlay to darken background and center text */
-    .parallax-overlay {
-      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-      padding: 0 1rem;
-    }
-    
-    /* "Get Started" button styling */
-    .get-started-btn {
-      background-color: #3498db;
-      border: none;
-      color: #fff;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 20px;
-      transition: background-color 0.3s ease;
-    }
-    
-    .get-started-btn:hover {
-      background-color: #2980b9;
-    }
-    
-    /* ---------- HIGHLIGHTS SECTION ---------- */
-    .highlights {
-      padding: 50px 20px;
-      background: #f8f8f8;
-      text-align: center;
-    }
-    
-    .highlights h2 {
-      margin-bottom: 30px;
-      color: #333;
-    }
-    
-    .highlight-item {
-      display: inline-block;
-      width: 300px;
-      margin: 20px;
-      vertical-align: top;
-      text-align: center;
-    }
-    
-    .highlight-item img {
-      width: 80px;
-      height: auto;
-    }
-    
-    .highlight-item h3 {
-      margin-top: 15px;
-      color: #3498db;
-    }
-    
-    /* ---------- VIDEO DEMO SECTION ---------- */
-    .video-demo {
-      padding: 50px 20px;
-      background: #fff;
-      text-align: center;
-    }
-    
-    .video-demo h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-    
-    .video-demo iframe {
-      width: 80%;
-      max-width: 800px;
-      height: 450px;
-      border: none;
-    }
-    
-    /* ---------- FOOTER ---------- */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #333;
-      color: #fff;
-    }
-    
-    /* ---------- RESPONSIVE ADJUSTMENTS ---------- */
-    @media (max-width: 768px) {
-      .highlight-item {
-        width: 90%;
-        margin: 20px auto;
-      }
-    }
-   
-  </style>
-   {% endblock %}
-</head>
-<body>
-  {% block content %}
-  <!-- ---------- PARALLAX HERO SECTION ---------- -->
+<!-- {% if message %}
+  <div class="alert alert-success text-center">
+    {{ message }}
+  </div>
+{% endif %} -->
+
+{% block title %}Home – Tourista{% endblock %}
+
+{% block extra_css %}
+<style>
+  :root {
+    --brand-orange: #FF9900;
+    --brand-dark:   #333333;
+    --brand-light:  #FFFFFF;
+  }
+  /* PARALLAX HERO */
+  .parallax {
+    background-image: url("{% static 'images/travel_hero.jpg' %}");
+    height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  .parallax-overlay {
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--brand-light);
+    text-align: center;
+    padding: 0 1rem;
+  }
+  .get-started-btn {
+    background: var(--brand-orange);
+    border: none;
+    color: var(--brand-light);
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    border-radius: .5rem;
+    transition: background .3s;
+  }
+  .get-started-btn:hover {
+    background: #e68a00;
+  }
+
+  /* HIGHLIGHTS */
+  .highlights {
+    background: #f4f4f4;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+  .highlight-item {
+    display: inline-block;
+    width: 280px;
+    margin: 1rem;
+  }
+  .highlight-item img {
+    width: 64px;
+    margin-bottom: 1rem;
+  }
+  .highlight-item h3 {
+    color: var(--brand-orange);
+    margin-bottom: .5rem;
+  }
+
+  /* VIDEO DEMO */
+  .video-demo {
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+  .video-demo iframe {
+    width: 100%;
+    max-width: 800px;
+    height: 450px;
+    border: none;
+  }
+</style>
+{% endblock %}
+
+{% if messages %}
+  <div class="container mt-3">
+    {% for msg in messages %}
+      <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% block content %}
+  <!-- PARALLAX HERO -->
   <div class="parallax">
     <div class="parallax-overlay">
-      <!-- Title and description over the parallax background -->
-      <h1>Discover Your Next Adventure</h1>
-      <p>Experience AI-powered recommendations, local partnerships, and eco-friendly travel.</p>
-      <!-- "Get Started" button; clicking redirects to the onboarding page -->
+      <h1 class="display-4">Discover Your Next Adventure</h1>
+      <p class="lead">AI-powered recommendations • Local partnerships • Eco-friendly travel</p>
       <a href="{% url 'onboarding' %}">
         <button class="get-started-btn">Get Started</button>
       </a>
     </div>
   </div>
-  
-  <!-- ---------- HIGHLIGHTS SECTION ---------- -->
-  <div class="highlights">
-    <h2>Why Choose Tourista?</h2>
-    <!-- Highlight 1: AI Recommendations -->
+
+  <!-- HIGHLIGHTS -->
+  <section class="highlights">
+    <h2 class="mb-5">Why Choose Tourista?</h2>
     <div class="highlight-item">
       <img src="{% static 'images/ai_recommendations.png' %}" alt="AI Recommendations">
-      <!-- ai_recommendations.png: Icon representing AI-based travel suggestions -->
-      <h3>Smart AI Recommendations</h3>
-      <p>Personalized suggestions based on your travel style and preferences.</p>
+      <h3>Smart AI Picks</h3>
+      <p>Personalized travel suggestions based on your style.</p>
     </div>
-    <!-- Highlight 2: Local Partnerships -->
     <div class="highlight-item">
       <img src="{% static 'images/local_partnerships.png' %}" alt="Local Partnerships">
-      <!-- local_partnerships.png: Icon representing local business collaborations -->
-      <h3>Exclusive Local Partnerships</h3>
-      <p>Unlock deals and promotions from trusted local businesses.</p>
+      <h3>Local Deals</h3>
+      <p>Exclusive offers from trusted local businesses.</p>
     </div>
-    <!-- Highlight 3: Eco-Friendly Travel -->
     <div class="highlight-item">
       <img src="{% static 'images/eco_friendly.png' %}" alt="Eco-Friendly Travel">
-      <!-- eco_friendly.png: Icon representing sustainable travel -->
-      <h3>Eco-Friendly Travel</h3>
-      <p>Explore sustainable destinations and support eco-conscious tourism.</p>
+      <h3>Eco-Friendly</h3>
+      <p>Support sustainable tourism and protect the planet.</p>
     </div>
-  </div>
-  
-  <!-- ---------- VIDEO DEMO SECTION ---------- -->
-  <div class="video-demo">
-    <h2>See Tourista in Action</h2>
-    <p>Watch our demo to see how Tourista transforms your travel planning experience.</p>
-    <!-- Embedded video demo (YouTube embed example) -->
-    <!-- Replace 'VIDEO_ID' with your actual YouTube video ID -->
+  </section>
+
+  <!-- VIDEO DEMO -->
+  <section class="video-demo">
+    <h2 class="mb-4">See Tourista in Action</h2>
     <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-  </div>
-  
-  <!-- ---------- FOOTER ---------- -->
-  <footer>
-    <p>&copy; 2025 Tourista. All Rights Reserved.</p>
-  </footer>
-</body>
-</html>
+  </section>
 {% endblock %}

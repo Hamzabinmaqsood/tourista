@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Onboarding – Languages{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2>Step 4: Languages You Speak</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ wizard.management_form }}
+    {{ form.as_p }}
+    <button class="btn btn-success mt-3">Finish</button>
+  </form>
+</div>
+{% endblock %}

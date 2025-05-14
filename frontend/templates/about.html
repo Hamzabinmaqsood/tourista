@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us – Tourista{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <!-- Mission & Vision -->
+  <div class="text-center mb-5">
+    <h1>About Tourista</h1>
+    <p class="lead">{{ mission }}</p>                                          <!-- Mission statement -->
+    <h5 class="mt-4">Our Vision</h5>
+    <p>{{ vision }}</p>                                                         <!-- Vision statement -->
+  </div>
+
+  <!-- Core Values -->
+  <div class="row justify-content-center mb-5">
+    {% for val in values %}
+      <div class="col-6 col-md-3 text-center">
+        <div class="p-4 border rounded shadow-sm">
+          <h6 class="mb-2">{{ val }}</h6>                                       <!-- Value -->
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Meet the Team -->
+  <h2 class="text-center mb-4">Meet the Team</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for member in team %}
+      <div class="col">
+        <div class="card border-0 text-center shadow-sm">
+          <img src="{{ member.photo }}" 
+               class="rounded-circle mx-auto mt-4" 
+               style="width:120px; height:120px;" 
+               alt="{{ member.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ member.name }}</h5>
+            <p class="text-muted mb-3">{{ member.role }}</p>
+            <a href="{{ member.linkedin }}" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
