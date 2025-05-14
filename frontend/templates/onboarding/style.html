@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Onboarding – Tourista{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2>Step 1: Choose Your Travel Style</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ wizard.management_form }}
+    {{ form.as_p }}
+    <button class="btn btn-primary mt-3">Next</button>
+  </form>
+</div>
+{% endblock %}

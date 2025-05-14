@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ pkg.title }} – Tourista{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <!-- Image -->
+    <div class="col-md-6">
+      {% if pkg.image %}
+        <img src="{{ pkg.image.url }}" class="img-fluid rounded" alt="{{ pkg.title }}">
+      {% else %}
+        <img src="{% static 'images/dummy_destination.jpg' %}" class="img-fluid rounded"
+             alt="Placeholder">
+      {% endif %}
+    </div>
+    <!-- Details -->
+    <div class="col-md-6">
+      <h1>{{ pkg.title }}</h1>
+      <p class="text-muted">{{ pkg.short_description }}</p>
+      <p>{{ pkg.full_description }}</p>
+      <h3 class="mt-4">Price: ${{ pkg.price }}</h3>
+
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary mt-3">
+          Add to My Trip
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

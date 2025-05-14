@@ -1,5 +1,99 @@
+{# frontend/templates/dashboard.html #}
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard – Tourista{% endblock %}
+
 {% block content %}
-<h1>Your Dashboard</h1>
-<p>Here are your personalized recommendations and upcoming trips.</p>
+<div class="container py-5">
+
+  <h1 class="mb-4">Your Dashboard</h1>
+
+  <!-- Recommended for You -->
+  <section class="mb-5">
+    <h2 class="mb-3">Recommended for You</h2>
+    <div class="row g-4">
+      {% for rec in recommendations %}
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+
+          {% if rec.image %}
+          <img src="{{ rec.image.url }}" class="card-img-top" alt="{{ rec.name }}">
+          {% else %}
+          <img src="{% static 'images/dummy_destination.jpg' %}" class="card-img-top"
+            alt="Placeholder for {{ rec.name }}">
+          {% endif %}
+
+          <div class="card-body">
+            <h5 class="card-title">{{ rec.name }}</h5>
+            <p class="card-text text-muted">{{ rec.short_description }}</p>
+          </div>
+          <div class="card-footer bg-white border-0">
+            <a href="{% url 'destination_detail' rec.id %}" class="btn btn-outline-primary w-100">
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted">No recommendations available right now.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <!-- Upcoming Trips -->
+  <section class="mb-5">
+    <h2 class="mb-3">Upcoming Trips</h2>
+    {% if upcoming %}
+    <ul class="list-group mb-4">
+      {% for trip in upcoming %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ trip.title }}</strong><br>
+          <small class="text-muted">
+            {{ trip.start_date|date:"M j, Y" }}
+          </small>
+        </div>
+        <a href="{% url 'trip_detail' trip.id %}" class="btn btn-sm btn-outline-primary">
+          View
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no upcoming trips.</p>
+    {% endif %}
+  </section>
+
+
+  <!-- Saved Itineraries -->
+  <section>
+    <h2 class="mb-3">Saved Itineraries</h2>
+    {% if saved_itineraries %}
+    <div class="row g-4">
+      {% for itin in saved_itineraries %}
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ itin.name }}</h5>
+            <p class="card-text text-muted">
+              Created on {{ itin.created_at|date:"M j, Y" }}
+            </p>
+          </div>
+          <div class="card-footer bg-white border-0">
+            <a href="{% url 'itinerary_detail' itin.id %}" class="btn btn-primary w-100">
+              Open
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No itineraries saved yet.</p>
+    {% endif %}
+  </section>
+
+</div>
 {% endblock %}

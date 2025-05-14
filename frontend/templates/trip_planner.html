@@ -1,0 +1,42 @@
+{# frontend/templates/trip_planner.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Plan Your Trip — Tourista{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <h1 class="mb-4">Plan Your Trip</h1>
+  <p>Select a package to get started, or build your own itinerary!</p>
+
+  <div class="row g-4">
+    {% for pkg in packages %}
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+
+          {# Always render the URL we passed in from the view #}
+          <img src="{{ pkg.image_url }}"
+               class="card-img-top"
+               alt="{{ pkg.title }}">
+
+          <div class="card-body">
+            <h5 class="card-title">{{ pkg.title }}</h5>
+            <p class="card-text text-muted">{{ pkg.short_description }}</p>
+          </div>
+
+          <div class="card-footer bg-white border-0">
+            <a href="{% url 'package_detail' pkg.pk %}"
+               class="btn btn-primary w-100">
+              View Details
+            </a>
+          </div>
+
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted">No travel packages are available right now. Check back soon!</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
