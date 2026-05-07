@@ -1,207 +1,347 @@
+{# frontend/templates/auth.html #}
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Sign In / Sign Up - Tourista{% endblock %}
+{% block title %}Sign In / Sign Up — Tourista{% endblock %}
 
 {% block extra_css %}
 <style>
-/* ---- MAIN LAYOUT WRAPPER ---- */
-.auth-wrapper {
-  display: flex;
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-/* ---- LEFT SECTION (WELCOME / LOGO / BACKGROUND) ---- */
-.auth-left {
-  flex: 1;
-  background: linear-gradient(135deg, #9b59b6 0%, #6c5ce7 100%);
-  /* If you want a background image, uncomment below and comment out the gradient:*/
-     background: url("{% static 'images/bg.jpg' %}") no-repeat center center/cover; 
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  color: #fff;
-  text-align: center;
-}
-
-.auth-left .logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
-.auth-left h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.auth-left p {
-  font-size: 1.1rem;
-  max-width: 300px;
-}
-
-/* ---- RIGHT SECTION (FORMS) ---- */
-.auth-right {
-  flex: 1;
-  background: #f7f7f7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-/* ---- TOGGLE CONTAINER ---- */
-.toggle-auth-container {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  width: 90%;
-  max-width: 400px;
-  padding: 2rem;
-  text-align: center;
-}
-
-/* ---- TOGGLE BUTTONS ---- */
-.toggle-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1.5rem;
-}
-
-.toggle-btn {
-  background: transparent;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  outline: none;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #888;
-  border-bottom: 2px solid transparent;
-  transition: color 0.3s, border-color 0.3s;
-}
-
-.toggle-btn.active {
-  color: #3498db;
-  border-color: #3498db;
-}
-
-/* ---- FORM STYLING ---- */
-.form-card {
-  transition: opacity 0.3s ease;
-}
-
-.hidden {
-  display: none;
-}
-
-.auth-form h2 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.auth-form form {
-  text-align: left;
-}
-
-.auth-form label {
-  font-weight: 500;
-  margin-top: 0.5rem;
-  display: inline-block;
-}
-
-.auth-form input[type="text"],
-.auth-form input[type="password"],
-.auth-form input[type="email"] {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.btn {
-  background: #3498db;
-  color: #fff;
-  border: none;
-  padding: 0.7rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 0.5rem;
-}
-
-.btn:hover {
-  background: #2980b9;
-}
-
-/* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
   .auth-wrapper {
-    flex-direction: column;
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
   }
-  .auth-left, .auth-right {
-    flex: none;
-    width: 100%;
-  }
+
+  /* LEFT HERO SECTION */
   .auth-left {
-    min-height: 200px;
-    padding: 1rem;
+    flex: 1;
+    position: relative;
+    background: url("{% static 'images/bg.jpg' %}") center/cover no-repeat;
+    background-blend-mode: overlay;
+    background-color: rgba(44, 62, 80, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    color: #fff;
   }
-}
+
+  .auth-left::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .auth-left .hero-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .auth-left img.logo {
+    width: 120px;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .auth-left h1 {
+    font-size: 2.25rem;
+    margin-bottom: .75rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .auth-left p {
+    font-size: 1.2rem;
+    max-width: 320px;
+    color: #f3f3f3;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  /* RIGHT FORM SECTION */
+  .auth-right {
+    flex: 1;
+    background: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toggle-auth-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 420px;
+    padding: 2rem;
+  }
+
+  /* TOGGLE SWITCH BUTTONS */
+  .toggle-buttons {
+    display: flex;
+    margin-bottom: 2rem;
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #666;
+  }
+
+  .toggle-btn.active {
+    background: #3498db;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* FORM STYLES */
+  .auth-form {
+    display: none;
+  }
+
+  .auth-form.active {
+    display: block;
+  }
+
+  .auth-form h2 {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+  }
+
+  /* FLOATING LABELS */
+  .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-input {
+    width: 100%;
+    height: 50px;
+    padding: 16px 12px 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    color: #333;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+
+  .form-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus~.form-label,
+  .form-input:not(:placeholder-shown)~.form-label {
+    top: 8px;
+    transform: translateY(0);
+    font-size: 12px;
+    color: #3498db;
+    background: #fff;
+    padding: 0 4px;
+  }
+
+  /* TRAVEL STYLE DROPDOWN */
+  .form-group select.form-input {
+    appearance: none;
+    background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 12px center/16px;
+  }
+
+  /* BUTTON STYLES */
+  .btn-primary {
+    background: #3498db;
+    border: none;
+    width: 100%;
+    font-weight: 600;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: #2980b9;
+  }
+
+  /* ERROR MESSAGES */
+  .text-danger.small {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #e74c3c;
+  }
+
+  /* MOBILE RESPONSIVE */
+  @media (max-width: 768px) {
+    .auth-wrapper {
+      flex-direction: column;
+    }
+
+    .auth-left,
+    .auth-right {
+      width: 100%;
+      flex: none;
+    }
+
+    .auth-left {
+      min-height: 250px;
+      padding: 1rem;
+    }
+
+    .auth-left h1 {
+      font-size: 1.75rem;
+    }
+
+    .toggle-auth-container {
+      width: 100%;
+      padding: 1.5rem;
+    }
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="auth-wrapper">
 
-  <!-- LEFT SECTION: LOGO & WELCOME -->
+  <!-- LEFT HERO -->
   <div class="auth-left">
-    <!-- Dummy or actual logo image -->
-    <img src="{% static 'images/tourista_logo.png' %}" alt="Tourista Logo" class="logo" />
-    <h1>Welcome to Tourista</h1>
-    <p>Your adventure starts here. Sign in or sign up to continue!</p>
+    <div class="hero-text">
+      <img src="{% static 'images/tourista_logo.png' %}" alt="Tourista Logo" class="logo">
+      <h1>Welcome to Tourista</h1>
+      <p>Plan your perfect journey. Sign in or create an account to begin!</p>
+    </div>
   </div>
 
-  <!-- RIGHT SECTION: FORMS -->
+  <!-- RIGHT FORM SECTION -->
   <div class="auth-right">
     <div class="toggle-auth-container">
 
-      <!-- Toggle Buttons -->
+      <!-- TOGGLE BUTTONS -->
       <div class="toggle-buttons">
         <button id="showLoginBtn" class="toggle-btn active">Sign In</button>
         <button id="showRegisterBtn" class="toggle-btn">Sign Up</button>
       </div>
 
-      <!-- Sign In Form -->
-      <div id="loginForm" class="form-card auth-form">
-        <h2>Sign In</h2>
-        <form method="post" action="{% url 'login' %}">
+      <!-- SIGN IN FORM -->
+      <div id="loginForm" class="auth-form active">
+        <h2>Welcome Back!</h2>
+        <form method="post" action="{% url 'auth' %}">
           {% csrf_token %}
+          <input type="hidden" name="form_type" value="login">
+
           {% if login_form.non_field_errors %}
-            <div class="alert alert-danger">{{ login_form.non_field_errors }}</div>
+          <div class="alert alert-danger mb-3">{{ login_form.non_field_errors.0 }}</div>
           {% endif %}
-          {{ login_form.as_p }}
-          <button type="submit" class="btn">Sign In</button>
+
+          <div class="form-group">
+            <input type="text" class="form-input" name="username" placeholder=" " required
+              value="{{ login_form.username.value|default:'' }}">
+            <label class="form-label">Username</label>
+            {% if login_form.username.errors %}
+            <div class="text-danger small">{{ login_form.username.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <input type="password" class="form-input" name="password" placeholder=" " required>
+            <label class="form-label">Password</label>
+            {% if login_form.password.errors %}
+            <div class="text-danger small">{{ login_form.password.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign In</button>
         </form>
       </div>
 
-      <!-- Sign Up Form -->
-      <div id="registerForm" class="form-card auth-form hidden">
-        <h2>Sign Up</h2>
-        <form method="post" action="{% url 'register' %}">
+      <!-- SIGN UP FORM -->
+      <div id="registerForm" class="auth-form">
+        <h2>Create Account</h2>
+        <form method="post" action="{% url 'auth' %}">
           {% csrf_token %}
+          <input type="hidden" name="form_type" value="register">
+
           {% if register_form.non_field_errors %}
-            <div class="alert alert-danger">{{ register_form.non_field_errors }}</div>
+          <div class="alert alert-danger mb-3">{{ register_form.non_field_errors.0 }}</div>
           {% endif %}
-          {{ register_form.as_p }}
-          <button type="submit" class="btn">Sign Up</button>
+
+          <div class="form-group">
+            <input type="text" class="form-input" name="username" placeholder=" " required
+              value="{{ register_form.username.value|default:'' }}">
+            <label class="form-label">Username</label>
+            {% if register_form.username.errors %}
+            <div class="text-danger small">{{ register_form.username.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <input type="email" class="form-input" name="email" placeholder=" " required
+              value="{{ register_form.email.value|default:'' }}">
+            <label class="form-label">Email Address</label>
+            {% if register_form.email.errors %}
+            <div class="text-danger small">{{ register_form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <input type="tel" class="form-input" name="phone_number" placeholder=" " required
+              value="{{ register_form.phone_number.value|default:'' }}">
+            <label class="form-label">Phone Number</label>
+            {% if register_form.phone_number.errors %}
+            <div class="text-danger small">{{ register_form.phone_number.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            {{ register_form.travel_style }}
+            <label class="form-label" for="{{ register_form.travel_style.id_for_label }}">
+              {{ register_form.travel_style.label }}
+            </label>
+            {% if register_form.travel_style.errors %}
+            <div class="text-danger small">{{ register_form.travel_style.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <input type="password" class="form-input" name="password1" placeholder=" " required>
+            <label class="form-label">Password</label>
+            {% if register_form.password1.errors %}
+            <div class="text-danger small">{{ register_form.password1.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <input type="password" class="form-input" name="password2" placeholder=" " required>
+            <label class="form-label">Confirm Password</label>
+            {% if register_form.password2.errors %}
+            <div class="text-danger small">{{ register_form.password2.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create Account</button>
         </form>
       </div>
 
@@ -211,5 +351,56 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/main.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Form Toggle Functionality
+    const loginBtn = document.getElementById('showLoginBtn');
+    const regBtn = document.getElementById('showRegisterBtn');
+    const loginForm = document.getElementById('loginForm');
+    const regForm = document.getElementById('registerForm');
+
+    function toggleForms(showLogin) {
+      loginBtn.classList.toggle('active', showLogin);
+      regBtn.classList.toggle('active', !showLogin);
+      loginForm.classList.toggle('active', showLogin);
+      regForm.classList.toggle('active', !showLogin);
+    }
+
+    // Preserve active tab on page reload
+    const activeForm = localStorage.getItem('activeForm') || 'loginForm';
+    toggleForms(activeForm === 'loginForm');
+
+    loginBtn.addEventListener('click', () => {
+      localStorage.setItem('activeForm', 'loginForm');
+      toggleForms(true);
+    });
+
+    regBtn.addEventListener('click', () => {
+      localStorage.setItem('activeForm', 'registerForm');
+      toggleForms(false);
+    });
+
+    // Initialize form labels and values
+    document.querySelectorAll('.form-input').forEach(input => {
+      // Set initial labels
+      if (input.value) {
+        input.dispatchEvent(new Event('input'));
+      }
+
+      // Handle dynamic updates
+      input.addEventListener('input', function () {
+        const label = this.parentNode.querySelector('.form-label');
+        label.classList.toggle('active', this.value !== '');
+      });
+    });
+
+    // Handle select elements
+    document.querySelectorAll('select').forEach(select => {
+      select.addEventListener('change', function () {
+        const label = this.parentNode.querySelector('.form-label');
+        label.classList.toggle('active', this.value !== '');
+      });
+    });
+  });
+</script>
 {% endblock %}

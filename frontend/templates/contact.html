@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Contact Us – Tourista{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="mb-4 text-center">Get in Touch</h1>
+
+  <div class="row">
+    <!-- Contact Form -->
+    <div class="col-md-7">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <!-- Name Field -->
+        <div class="mb-3">
+          <label for="id_name" class="form-label">Name</label>
+          {{ form.name }}                                                 :contentReference[oaicite:0]{index=0}
+          {{ form.name.errors }}
+        </div>
+        <!-- Email Field -->
+        <div class="mb-3">
+          <label for="id_email" class="form-label">Email</label>
+          {{ form.email }}                                                :contentReference[oaicite:1]{index=1}
+          {{ form.email.errors }}
+        </div>
+        <!-- Subject Field -->
+        <div class="mb-3">
+          <label for="id_subject" class="form-label">Subject</label>
+          {{ form.subject }}                                              :contentReference[oaicite:2]{index=2}
+          {{ form.subject.errors }}
+        </div>
+        <!-- Message Field -->
+        <div class="mb-3">
+          <label for="id_message" class="form-label">Message</label>
+          {{ form.message }}                                              :contentReference[oaicite:3]{index=3}
+          {{ form.message.errors }}
+        </div>
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary">Send Message</button> :contentReference[oaicite:4]{index=4}
+      </form>
+    </div>
+
+    <!-- Contact Details & Social -->
+    <div class="col-md-5">
+      <div class="p-4 bg-light rounded shadow-sm">
+        <h5>Contact Details</h5>
+        <p><strong>Email:</strong> support@tourista.com</p>               :contentReference[oaicite:5]{index=5}
+        <p><strong>Phone:</strong> +92 123 4567890</p>                    :contentReference[oaicite:6]{index=6}
+        <p><strong>Address:</strong> Main Boulevard, Kashmir, Pakistan</p> :contentReference[oaicite:7]{index=7}
+
+        <hr>
+
+        <h5>Follow Us</h5>
+        <a href="#" class="me-2"><img src="{% static 'images/icon_facebook.png' %}" alt="Facebook" width="32"></a>
+        <a href="#" class="me-2"><img src="{% static 'images/icon_twitter.png' %}" alt="Twitter" width="32"></a>
+        <a href="#"><img src="{% static 'images/icon_instagram.png' %}" alt="Instagram" width="32"></a>
+        <!-- social icons per Tour template style --> :contentReference[oaicite:8]{index=8}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

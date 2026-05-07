@@ -1,8 +1,47 @@
 {% extends "base.html" %}
+{% load static %}
+{% block title %}Your Profile – Tourista{% endblock %}
+
 {% block content %}
-  <h2>Welcome, {{ user.username }}!</h2>
-  <p>Travel Style: {{ user.travel_style }}</p>
-  <p>Budget: {{ user.budget }}</p>
-  <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="100">
-  <a href="{% url 'logout' %}">Logout</a>
+<div class="container py-5">
+  <h1>My Profile</h1>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="mt-4">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+      <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+      {{ form.phone_number }}
+      {{ form.phone_number.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.travel_style.id_for_label }}" class="form-label">Travel Style</label>
+      {{ form.travel_style }}
+      {{ form.travel_style.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.avatar.id_for_label }}" class="form-label">Avatar</label><br>
+      {% if request.user.avatar %}
+        <img src="{{ request.user.avatar.url }}" class="rounded-circle mb-2" width="80">
+      {% endif %}
+      {{ form.avatar }}
+      {{ form.avatar.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
 {% endblock %}

@@ -1,87 +1,140 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <!-- Responsive meta tag -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Tourista{% endblock %}</title>
-  
-  <!-- Bootstrap CSS (for professional styling and responsiveness) -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" href="{% static 'images/tourista_logo.png' %}">
-  
-  {% block extra_css %}{% endblock %}
+
+  {% block extra_css %}
+  <style>
+    :root {
+      --brand-orange: #FF9900;
+      --brand-dark: #333333;
+      --brand-light: #FFFFFF;
+    }
+
+    footer {
+      background-color: var(--brand-dark);
+      color: var(--brand-light);
+    }
+  </style>
+  {% endblock %}
 </head>
+
 <body>
-  <!-- Professional, responsive Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  <div style="height: 70px;">
+
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="{% url 'landing' %}">
-        <img src="{% static 'images/tourista_logo.png' %}" alt="Tourista Logo" style="width: 40px; height: auto; margin-right: 10px;">
-        Tourista
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'landing' %}">
+        <img src="{% static 'images/tourista_logo.png' %}" width="40" class="me-2" alt="Tourista logo">
+        <span class="fw-bold" style="color: var(--brand-orange)">Tourista</span>
       </a>
-      <!-- Navbar toggler for mobile -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'landing' %}">Home</a>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          {% comment %} Home {% endcomment %}
+          <li class="nav-item mx-2">
+            <a class="nav-link{% if request.resolver_match.url_name == 'landing' %} active{% endif %}"
+              href="{% url 'landing' %}">Home</a>
           </li>
-          <!-- Future pages like About, Contact, etc. -->
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+
+          {% comment %} Trip Planner {% endcomment %}
+          <li class="nav-item mx-2">
+            <a class="nav-link{% if request.resolver_match.url_name == 'trip_planner' %} active{% endif %}"
+              href="{% url 'trip_planner' %}">Trip Planner</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+
+          {% comment %} About Us {% endcomment %}
+          <li class="nav-item mx-2">
+            <a class="nav-link{% if request.resolver_match.url_name == 'about' %} active{% endif %}"
+              href="{% url 'about' %}">About</a>
           </li>
+
+          {% comment %} Contact {% endcomment %}
+          <li class="nav-item mx-2">
+            <a class="nav-link{% if request.resolver_match.url_name == 'contact' %} active{% endif %}"
+              href="{% url 'contact' %}">Contact</a>
+          </li>
+
           {% if user.is_authenticated %}
+          {% comment %} Dashboard {% endcomment %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+              href="{% url 'dashboard' %}">Dashboard</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+
+
+          {% comment %} Profile {% endcomment %}
+          <li class="nav-item mx-2">
+            <a class="nav-link{% if request.resolver_match.url_name == 'profile' %} active{% endif %}"
+              href="{% url 'profile' %}">Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+
+          {% comment %} Logout {% endcomment %}
+          <li class="nav-item mx-2">
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <!-- <a class="nav-link text-danger" class="btn btn-link nav-link text-danger p-0" href="{% url 'logout' %}">Logout</a> -->
+              <button type="submit" class="btn btn-link nav-link text-danger p-0">
+                Logout
+              </button>
+            </form>
           </li>
           {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'auth' %}">Sign In / Sign Up</a>
+          {% comment %} Sign In / Up {% endcomment %}
+          <li class="nav-item mx-2">
+            <a class="btn btn-outline-primary px-3" href="{% url 'auth' %}">Sign In / Sign Up</a>
           </li>
           {% endif %}
         </ul>
       </div>
     </div>
   </nav>
-  
-  <!-- Main Content -->
+
+  <!-- Spacer to offset fixed navbar -->
+  <div style="height: 70px;"></div>
+
+  {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   <main>
     {% block content %}{% endblock %}
   </main>
-  
-  <!-- Footer (optional) -->
-  <footer class="bg-dark text-white text-center py-3">
+
+  <footer class="text-center py-3 mt-5">
     <div class="container">
       &copy; 2025 Tourista. All Rights Reserved.
     </div>
   </footer>
-  
-  <!-- jQuery and Bootstrap JS (for navbar toggling and responsiveness) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <!-- Custom JS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{% static 'js/main.js' %}"></script>
   {% block extra_js %}{% endblock %}
 </body>
+
 </html>

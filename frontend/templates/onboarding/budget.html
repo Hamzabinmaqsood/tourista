@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Onboarding – Budget{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2>Step 2: Select Your Budget</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ wizard.management_form }}
+    {{ form.as_p }}
+    <button class="btn btn-primary mt-3">Next</button>
+  </form>
+</div>
+{% endblock %}

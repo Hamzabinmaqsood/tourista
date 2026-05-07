@@ -1,8 +1,148 @@
 {% extends "base.html" %}
-{% block title %}Onboarding - Tourista{% endblock %}
+{% load static %}
+
+{% block title %}Onboarding – Tourista{% endblock %}
+
+{% block extra_css %}
+<style>
+  .onboard-step { display: none; }
+  .onboard-step.active { display: block; }
+  .step-indicator .nav-link.active {
+    background-color: var(--brand-orange);
+    color: #fff;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-  <div class="container">
-    <h1>Onboarding</h1>
-    <p>This is the onboarding page. Customize this wizard to capture user preferences.</p>
-  </div>
+<div class="container my-5">
+  <h1 class="mb-4">Tell Us About You</h1>
+
+  <!-- Step Indicators -->
+  <ul class="nav nav-pills step-indicator mb-4">
+    <li class="nav-item">
+      <a class="nav-link active" href="#" data-step="1">1. Style</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-step="2">2. Budget</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-step="3">3. Duration</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-step="4">4. Languages</a>
+    </li>
+  </ul>
+
+  <!-- Onboarding Form -->
+  <form id="onboardingForm">
+    {% csrf_token %}
+    <!-- Step 1: Travel Style -->
+    <div class="onboard-step active" id="step-1">
+      <h4>Choose Your Travel Style</h4>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="travel_style" id="styleAdventure" value="adventure">
+        <label class="form-check-label" for="styleAdventure">Adventure</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="travel_style" id="styleRelax" value="relaxation">
+        <label class="form-check-label" for="styleRelax">Relaxation</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="travel_style" id="styleCulture" value="culture">
+        <label class="form-check-label" for="styleCulture">Culture</label>
+      </div>
+    </div>
+
+    <!-- Step 2: Budget -->
+    <div class="onboard-step" id="step-2">
+      <h4>Select Your Budget</h4>
+      <select class="form-select" name="budget">
+        <option value="" disabled selected>Choose budget</option>
+        <option value="low">Low (&lt; $500)</option>
+        <option value="medium">Medium ($500–$1,500)</option>
+        <option value="high">High (&gt; $1,500)</option>
+      </select>
+    </div>
+
+    <!-- Step 3: Duration -->
+    <div class="onboard-step" id="step-3">
+      <h4>Trip Duration</h4>
+      <select class="form-select" name="duration">
+        <option value="" disabled selected>Select duration</option>
+        <option value="weekend">Weekend (1–2 days)</option>
+        <option value="week">Week (3–7 days)</option>
+        <option value="month">Month (8+ days)</option>
+      </select>
+    </div>
+
+    <!-- Step 4: Languages -->
+    <div class="onboard-step" id="step-4">
+      <h4>Which Languages Do You Speak?</h4>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="languages" id="langEn" value="en">
+        <label class="form-check-label" for="langEn">English</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="languages" id="langEs" value="es">
+        <label class="form-check-label" for="langEs">Spanish</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="languages" id="langFr" value="fr">
+        <label class="form-check-label" for="langFr">French</label>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+      <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+      <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function() {
+    const steps = Array.from(document.querySelectorAll('.onboard-step'));
+    const tabs  = Array.from(document.querySelectorAll('.step-indicator .nav-link'));
+    let current = 0;
+
+    function showStep(index) {
+      steps.forEach((s,i) => s.classList.toggle('active', i === index));
+      tabs.forEach((t,i) => t.classList.toggle('active', i === index));
+      document.getElementById('prevBtn').disabled = index === 0;
+      document.getElementById('nextBtn').textContent = index === steps.length - 1 ? 'Finish' : 'Next';
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (current < steps.length - 1) {
+        current++;
+        showStep(current);
+      } else {
+        // Submit the form or redirect to dashboard
+        document.getElementById('onboardingForm').submit();
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (current > 0) {
+        current--;
+        showStep(current);
+      }
+    });
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        const idx = +tab.getAttribute('data-step') - 1;
+        current = idx;
+        showStep(idx);
+      });
+    });
+
+    showStep(current);
+  })();
+</script>
 {% endblock %}

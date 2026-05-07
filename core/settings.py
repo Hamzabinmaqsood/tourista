@@ -1,6 +1,17 @@
 import os
 from pathlib import Path
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+# Update these to match your conda env path!
+CONDA_PREFIX = os.environ.get('CONDA_PREFIX', r'C:\Users\Lenovo\anaconda3\envs\tourista')
+
+GDAL_LIBRARY_PATH = os.path.join(CONDA_PREFIX, 'Library', 'bin', 'gdal310.dll')
+GEOS_LIBRARY_PATH = os.path.join(CONDA_PREFIX, 'Library', 'bin', 'geos_c.dll')
+# (You can similarly point PROJ_LIB etc. if you run into missing‐CRS errors)
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+GDAL_LIBRARY_PATH = r"C:\Users\Lenovo\Desktop\tourista_mvp\Backend\venv\Lib\site-packages\osgeo\gdal310.dll"
 # Build paths inside the project like this: BASE_DIR / 'subdir'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +31,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.gis',
     'user_profiles',  # Changed from 'users'
     'trips',
     'local_businesses',
     'chatbot',
     'rest_framework',          # For API
-    'frontend',                # Your new frontend app
+    'frontend.apps.FrontendConfig',              # Your new frontend app
+    'formtools',
+    'widget_tweaks',
+    # 'leaflet',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +73,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (34.0837, 74.7973),  # approximate center of Kashmir
+    'DEFAULT_ZOOM': 8,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'TILES': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+}
+
 # Database
 DATABASES = {
     'default': {
@@ -68,6 +92,7 @@ DATABASES = {
 
 # Custom User Model
 AUTH_USER_MODEL = 'user_profiles.CustomUser'
+# AUTH_USER_MODEL = 'frontend.CustomUser'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -106,5 +131,36 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend', 'static'),
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+OSGEO4W = os.environ.get('OSGEO4W_ROOT', r'C:\OSGeo4W')
+GDAL_LIBRARY_PATH = os.path.join(OSGEO4W, 'bin', 'gdal310.dll')
+GEOS_LIBRARY_PATH = os.path.join(OSGEO4W, 'bin', 'geos_c.dll')
+
+
+# optional, if you want a default
+LOGOUT_REDIRECT_URL = 'landing'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Static files (CSS, JS, images shipped with your code)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ BASE_DIR / 'frontend' / 'static' ]
+# In production, collectstatic will place files here:
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Media files (uploads by users)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+DEBUG = False
+ALLOWED_HOSTS = ['*']  # for local testing
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
